@@ -1,4 +1,7 @@
 {
+  "rust-analyzer.linkedProjects": [
+    "apps/program/Cargo.toml"
+  ],
   "eslint.workingDirectories": [
     {
       "mode": "auto"
