@@ -1,7 +1,7 @@
+use crate::constants::*;
+use crate::state::*;
 use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
-use crate::state::*;
-use crate::constants::*;
 
 pub fn process_initialize_pool(ctx: Context<InitializePool>) -> Result<()> {
     *ctx.accounts.pool = Pool {
@@ -9,12 +9,11 @@ pub fn process_initialize_pool(ctx: Context<InitializePool>) -> Result<()> {
         token_b_vault: ctx.accounts.token_b_vault.key(),
         lp_mint: ctx.accounts.lp_mint.key(),
         total_lp: 0,
-        bump: ctx.bumps.pool
+        bump: ctx.bumps.pool,
+        bump_lp_mint: ctx.bumps.lp_mint,
     };
     Ok(())
 }
-
-
 
 #[derive(Accounts)]
 pub struct InitializePool<'info> {
@@ -52,9 +51,11 @@ pub struct InitializePool<'info> {
         init,
         payer = payer,
         mint::decimals = 9,
-        mint::authority = pool
+        mint::authority = pool,
+        seeds =[SEED_LP_MINT_ACCOUNT, token_a_mint.key().as_ref(), token_b_mint.key().as_ref()],
+        bump
     )]
     pub lp_mint: InterfaceAccount<'info, Mint>,
     pub token_program: Interface<'info, TokenInterface>,
-    pub system_program: Program<'info, System>
+    pub system_program: Program<'info, System>,
 }
