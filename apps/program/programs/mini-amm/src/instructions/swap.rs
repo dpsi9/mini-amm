@@ -2,7 +2,7 @@ use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{self, Mint, TokenAccount, TokenInterface, TransferChecked};
 use crate::{constants::*, errors::ErrorCode, state::Pool};
 
-pub fn process_swap(ctx: Context<Swap>, amount_in: u64) -> Result<()> {
+pub fn process_swap(ctx: Context<Swap>, amount_in: u64, min_amount_out: u64) -> Result<()> {
     // check the vault_in and vault_out(which vault will recieve tokens and which will give tokens)
     let (vault_in, vault_out, mint_in, mint_out) = if ctx.accounts.user_token_in.mint == ctx.accounts.token_a_vault.mint {
         (&ctx.accounts.token_a_vault, &ctx.accounts.token_b_vault, &ctx.accounts.token_a_mint, &ctx.accounts.token_b_mint)
@@ -22,7 +22,7 @@ pub fn process_swap(ctx: Context<Swap>, amount_in: u64) -> Result<()> {
 
     let amount_out = (y - y_new) as u64;
 
-    require!(amount_out > 0, ErrorCode::InvalidAmount);
+    require!(amount_out >= min_amount_out, ErrorCode::SlippageExceeded);
 
     // transfer input from user to vault_in
     token_interface::transfer_checked(
