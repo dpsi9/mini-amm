@@ -80,7 +80,7 @@ pub struct AddLiquidity<'info> {
         seeds = [SEED_POOL_ACCOUNT, lp_mint.key().as_ref()],
         bump = pool.bump
     )]
-    pub pool: Account<'info, Pool>,
+    pub pool: Box<Account<'info, Pool>>,
     #[account(
         mut,
         seeds =[SEED_LP_MINT_ACCOUNT, token_a_mint.key().as_ref(), token_b_mint.key().as_ref()],
