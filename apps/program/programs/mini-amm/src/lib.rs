@@ -8,12 +8,14 @@ mod errors;
 mod instructions;
 mod state;
 mod utils;
-declare_id!("7wDDaaWhgmFcA2RgY8m9DGECAHF2RWNAU8bDwfwz79xd");
+declare_id!("3i6Xy9tVvVLB5LdYeAe3irwTTdzrHRNw7MC4qijcNVBW");
 
 #[program]
 pub mod mini_amm {
     use super::*;
-    use crate::instructions::{process_initialize_pool, process_add_liquidity, process_remove_liquidity, process_swap};
+    use crate::instructions::{
+        process_add_liquidity, process_initialize_pool, process_remove_liquidity, process_swap,
+    };
 
     pub fn initialize_pool(ctx: Context<InitializePool>) -> Result<()> {
         process_initialize_pool(ctx)
