@@ -14,7 +14,7 @@ import { BN } from "@coral-xyz/anchor";
 import { getPoolAddresses } from "@/utility/getPoolAddresses";
 import { useProgram } from "@/hooks/useProgram";
 import { getLpMintPda } from "@/utility/getLpMintPda";
-/* ---------- YOUR ADDRESSES ---------- */
+
 const MINT_A = new PublicKey("M546sKo2CSLUgadVRayVcZAKX27bQTGUWpB9Y1vSgh7");
 const MINT_B = new PublicKey("BxjrNSGbZbkuJuuHBhjPze5YDiKEtmwHDRKajsPZiCL5");
 /* TODO: replace with real LP‑mint PDA */
